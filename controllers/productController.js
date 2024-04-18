@@ -3,7 +3,6 @@ import categoryModel from "../models/categoryModel.js";
 import orderModel from "../models/orderModel.js";
 import fs from "fs";
 import slugify from "slugify";
-import braintree from "braintree";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -283,27 +282,21 @@ export const processPayment = async (req, res) => {
     cart.forEach((item) => {
       total += item.price;
     });
+    const random = Math.floor(Math.random() * 1000);
+    const paymentResult = {
+      id: 'random',
+      status: 'success',
+      amount: total.toFixed(2),
+      // You can include additional payment details as needed
+    };
 
-    // Process payment logic (replace this with your actual payment processing code)
-
-    // For demonstration purposes, assume payment is successful
-    // Create an order for the user with payment information
-    gateway.transaction.sale(
-      {
-        amount: total.toFixed(2), // Ensure amount is in correct format
-        paymentMethodNonce: nonce,
-        options: {
-          submitForSettlement: true,
-        },
-      },
-      async (error, result) => {
+      async (error, paymentResult) => {
         if (result) {
           try {
-            // Create an order using orderModel and save it
             const order = await new orderModel({
               products: cart,
-              payment: result,
-              buyer: req.user._id, // Assuming you have authenticated users
+              payment: paymentResult,
+              buyer: req.user._id, 
             }).save();
             res.json({ success: true, order });
           } catch (err) {
