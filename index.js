@@ -19,7 +19,7 @@ const app = express();
 //middelwares
 // app.use(cors());
 app.use(cors({
-  origin: "https://superb-strudel-4196ba.netlify.app",
+  origin: "https://mern-project-frontend-one.vercel.app",
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }));
 app.use(express.json());
