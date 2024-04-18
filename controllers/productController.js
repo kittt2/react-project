@@ -287,28 +287,30 @@ export const processPayment = async (req, res) => {
       id: 'random',
       status: 'success',
       amount: total.toFixed(2),
-      // You can include additional payment details as needed
     };
 
-      async (error, paymentResult) => {
-        if (result) {
-          try {
-            const order = await new orderModel({
-              products: cart,
-              payment: paymentResult,
-              buyer: req.user._id, 
-            }).save();
-            res.json({ success: true, order });
-          } catch (err) {
-            console.error("Error saving order:", err);
-            res.status(500).json({ success: false, error: "Error saving order" });
-          }
-        } else {
-          console.error("Transaction error:", error);
-          res.status(500).json({ success: false, error: "Transaction error" });
+    const processTransaction = async (error, paymentResult) => {
+      if (paymentResult) {
+        try {
+          const order = await new orderModel({
+            products: cart,
+            payment: paymentResult,
+            buyer: req.user._id,
+          }).save();
+          res.json({ success: true, order });
+        } catch (err) {
+          console.error("Error saving order:", err);
+          res.status(500).json({ success: false, error: "Error saving order" });
         }
+      } else {
+        console.error("Transaction error:", error);
+        res.status(500).json({ success: false, error: "Transaction error" });
       }
-    
+    };
+
+    // Call the asynchronous function
+    await processTransaction();
+
   } catch (error) {
     console.error("Error processing payment:", error);
     res.status(500).json({ success: false, error: "Payment processing failed" });
