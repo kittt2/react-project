@@ -308,7 +308,7 @@ export const processPayment = async (req, res) => {
           res.status(500).json({ success: false, error: "Transaction error" });
         }
       }
-    );
+    
   } catch (error) {
     console.error("Error processing payment:", error);
     res.status(500).json({ success: false, error: "Payment processing failed" });
