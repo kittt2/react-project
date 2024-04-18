@@ -282,14 +282,14 @@ export const processPayment = async (req, res) => {
     cart.forEach((item) => {
       total += item.price;
     });
-    const random = Math.floor(Math.random() * 1000);
+    const random = Math.floor(Math.random() * 1000).toString();
     const paymentResult = {
-      id: 'random',
+      id: random,
       status: 'success',
       amount: total.toFixed(2),
     };
 
-    const processTransaction = async (error, paymentResult) => {
+    const processTransaction = async (error, paymentResult) => { // Removed paymentResult parameter here
       if (paymentResult) {
         try {
           const order = await new orderModel({
@@ -308,8 +308,8 @@ export const processPayment = async (req, res) => {
       }
     };
 
-    // Call the asynchronous function
-    await processTransaction();
+    // Call the asynchronous function and pass error as null
+    await processTransaction(null, paymentResult); // Pass paymentResult as the second argument
 
   } catch (error) {
     console.error("Error processing payment:", error);
