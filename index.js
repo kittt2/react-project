@@ -16,12 +16,12 @@ connectDB();
 //rest object
 const app = express();
 
-//middelwares
-// app.use(cors());
-app.use(cors({
-  origin: "https://mern-project-frontend-one.vercel.app",
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}));
+app.use(
+  cors({
+origin: ["https://eccomerce-platfom.onrender.com", "https://nitinproject01.netlify.app","http://localhost:5173/","https://mern-project-frontend-one.vercel.app/"],    
+    optionsSuccessStatus: 200, 
+  })
+);
 app.use(express.json());
 app.use(morgan("dev"));
 
