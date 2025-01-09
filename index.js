@@ -18,7 +18,7 @@ const app = express();
 
 app.use(
   cors({
-origin: ["https://eccomerce-platfom.onrender.com", "https://nitinproject01.netlify.app","http://localhost:5173/","https://mern-project-frontend-one.vercel.app/"],    
+origin: ["http://localhost:5173/","https://mern-project-frontend-one.vercel.app/"],    
     optionsSuccessStatus: 200, 
   })
 );
