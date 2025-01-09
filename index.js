@@ -18,7 +18,7 @@ const app = express();
 
 app.use(
   cors({
-origin: ["http://localhost:5174","https://mern-project-frontend-one.vercel.app"],    
+origin: "https://mern-project-frontend-one.vercel.app",    
     optionsSuccessStatus: 200, 
   })
 );
